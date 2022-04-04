@@ -1,10 +1,14 @@
 public class ThreadState {
     public static void main(String[] args) {
         Thread first = new Thread(
-                () -> {}
+                () -> {
+
+                }
         );
         Thread second = new Thread(
-                () -> {}
+                () -> {
+
+                }
         );
 
         System.out.printf("%s state: %s, %s state: %s\n",
