@@ -7,9 +7,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Wget implements Runnable {
     private final String url;
@@ -23,7 +20,7 @@ public class Wget implements Runnable {
     @Override
     public void run() {
         try (BufferedInputStream in = new BufferedInputStream(new URL(url).openStream());
-             FileOutputStream fileOutputStream = new FileOutputStream(getFileNameFromURL(url))) {
+             FileOutputStream fileOutputStream = new FileOutputStream(Paths.get(new URI(url).getPath()).getFileName().toString())) {
             byte[] dataBuffer = new byte[speed];
             int bytesRead;
             long startTime = System.currentTimeMillis();
@@ -41,16 +38,10 @@ public class Wget implements Runnable {
         }
     }
 
-    public static String getFileNameFromURL(String url) throws URISyntaxException {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss_");
-        Date date = new Date();
-        return dateFormat.format(date) + Paths.get(new URI(url).getPath()).getFileName().toString();
-    }
-
-
     public static void main(String[] args) throws InterruptedException {
         if (args.length < 2) {
-            throw new IllegalArgumentException("Not enough args");
+            System.out.println("not enough arguments");
+            System.exit(0);
         }
         String url = args[0];
         int speed = Integer.parseInt(args[1]);
