@@ -21,7 +21,7 @@ public class Indexlookup<T> extends RecursiveTask<Integer> {
         int rsl = -1;
         if (endIndex - startIndex < 10) {
             for (int i = startIndex; i <= endIndex; i++) {
-                if (array[i] == index) {
+                if (array[i].equals(index)) {
                     rsl = i;
                     break;
                 }
